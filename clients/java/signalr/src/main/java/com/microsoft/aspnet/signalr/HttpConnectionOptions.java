@@ -13,6 +13,7 @@ public class HttpConnectionOptions {
     private boolean skipNegotiate;
     private Supplier<CompletableFuture<String>> accessTokenProvider;
     private HttpClient client;
+    private Integer handshakeResponseTimeout;
 
     public HttpConnectionOptions() {}
 
@@ -38,6 +39,14 @@ public class HttpConnectionOptions {
 
     public void setSkipNegotiate(boolean skipNegotiate) {
         this.skipNegotiate = skipNegotiate;
+    }
+
+    public void setHandshakeResponseTimeout(Integer timeout) {
+        this.handshakeResponseTimeout = timeout;
+    }
+
+    public Integer getHandshakeResponseTimeout() {
+        return handshakeResponseTimeout;
     }
 
     public Transport getTransport() {
