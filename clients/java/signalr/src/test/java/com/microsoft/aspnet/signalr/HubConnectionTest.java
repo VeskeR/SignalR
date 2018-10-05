@@ -5,6 +5,7 @@ package com.microsoft.aspnet.signalr;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
@@ -60,14 +61,14 @@ class HubConnectionTest {
     public void checkHubConnectionStateNoHandShakeResponse() {
         MockTransport mockTransport = new MockTransport();
         HttpConnectionOptions options = new HttpConnectionOptions();
-        options.setHandshakeResponseTimeout(1000);
+        options.setHandshakeResponseTimeout(Duration.ofMillis(1000));
         options.setTransport(mockTransport);
         options.setHttpClient(new TestHttpClient());
         options.setSkipNegotiate(true);
         HubConnection hubConnection = new HubConnectionBuilder().withUrl("http://example.com", options).build();
         Throwable exception = assertThrows(ExecutionException.class, () -> hubConnection.start().get());
         assertEquals(TimeoutException.class, exception.getCause().getClass());
-        assertEquals(exception.getCause().getMessage(), "No HandshakeResponse was recieved from the server");
+        assertEquals(exception.getCause().getMessage(), "No HandshakeResponse was received from the server");
         assertEquals(HubConnectionState.DISCONNECTED, hubConnection.getConnectionState());
     }
 

@@ -30,7 +30,7 @@ class MockTransport implements Transport {
             try {
                 onReceiveCallBack.invoke("{}" + RECORD_SEPARATOR);
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return CompletableFuture.completedFuture(null);

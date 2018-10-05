@@ -3,6 +3,7 @@
 
 package com.microsoft.aspnet.signalr;
 
+import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -13,7 +14,7 @@ public class HttpConnectionOptions {
     private boolean skipNegotiate;
     private Supplier<CompletableFuture<String>> accessTokenProvider;
     private HttpClient client;
-    private Integer handshakeResponseTimeout;
+    private Duration handshakeResponseTimeout;
 
     public HttpConnectionOptions() {}
 
@@ -41,11 +42,11 @@ public class HttpConnectionOptions {
         this.skipNegotiate = skipNegotiate;
     }
 
-    public void setHandshakeResponseTimeout(Integer timeout) {
+    public void setHandshakeResponseTimeout(Duration timeout) {
         this.handshakeResponseTimeout = timeout;
     }
 
-    public Integer getHandshakeResponseTimeout() {
+    public Duration getHandshakeResponseTimeout() {
         return handshakeResponseTimeout;
     }
 
