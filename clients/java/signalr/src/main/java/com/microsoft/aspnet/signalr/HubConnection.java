@@ -34,8 +34,8 @@ public class HubConnection {
     private ConnectionState connectionState = null;
     private HttpClient httpClient;
     private String stopError;
-    private CompletableFuture<Void> handshakeResponseFuture = new CompletableFuture<>();
-    private Duration handshakeResponseTimeout = Duration.ofMillis(25000);
+    private CompletableFuture<Void> handshakeResponseFuture;
+    private Duration handshakeResponseTimeout = Duration.ofMillis(1500);
 
     private static ArrayList<Class<?>> emptyArray = new ArrayList<>();
     private static int MAX_NEGOTIATE_ATTEMPTS = 100;
@@ -47,6 +47,7 @@ public class HubConnection {
 
         this.baseUrl = url;
         this.protocol = new JsonHubProtocol();
+        this.handshakeResponseFuture = new CompletableFuture<>();
 
         if (options.getAccessTokenProvider() != null) {
             this.accessTokenProvider = options.getAccessTokenProvider();
@@ -143,7 +144,7 @@ public class HubConnection {
     private void timeoutHandshakeResponse(long timeout, TimeUnit unit) {
         ScheduledExecutorService scheduledThreadPool = Executors.newSingleThreadScheduledExecutor();
         scheduledThreadPool.schedule(() -> handshakeResponseFuture.completeExceptionally(
-                new TimeoutException("No HandshakeResponse was received from the server")), timeout, unit);
+                new TimeoutException("Timed out waiting for the server to respond to the handshake message")), timeout, unit);
     }
 
     private CompletableFuture<NegotiateResponse> handleNegotiate(String url) {

@@ -68,7 +68,7 @@ class HubConnectionTest {
         HubConnection hubConnection = new HubConnectionBuilder().withUrl("http://example.com", options).build();
         Throwable exception = assertThrows(ExecutionException.class, () -> hubConnection.start().get());
         assertEquals(TimeoutException.class, exception.getCause().getClass());
-        assertEquals(exception.getCause().getMessage(), "No HandshakeResponse was received from the server");
+        assertEquals(exception.getCause().getMessage(), "Timed out waiting for the server to respond to the handshake message");
         assertEquals(HubConnectionState.DISCONNECTED, hubConnection.getConnectionState());
     }
 
