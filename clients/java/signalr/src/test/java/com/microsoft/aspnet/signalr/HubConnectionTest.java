@@ -57,7 +57,7 @@ class HubConnectionTest {
         mockTransport.stopWithError(errorMessage);
         assertEquals(errorMessage, message.get());
     }
-    
+
     public void checkHubConnectionStateNoHandShakeResponse() {
         MockTransport mockTransport = new MockTransport();
         HttpConnectionOptions options = new HttpConnectionOptions();
