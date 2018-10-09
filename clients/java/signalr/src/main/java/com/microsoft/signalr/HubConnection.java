@@ -70,7 +70,7 @@ public class HubConnection {
         this.tickRate = tickRate;
     }
 
-    public HubConnection(String url, HttpConnectionOptions options) {
+    HubConnection(String url, HttpConnectionOptions options) {
         if (url == null || url.isEmpty()) {
             throw new IllegalArgumentException("A valid url is required.");
         }
